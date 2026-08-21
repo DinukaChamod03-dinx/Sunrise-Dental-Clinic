@@ -38,3 +38,7 @@ public class CompleteAppointmentServlet extends HttpServlet {
         }
     }
 }
+
+
+
+//appointment as completed
