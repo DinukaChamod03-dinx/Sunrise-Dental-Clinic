@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Search Appointment - Sunrise Dental Clinic</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="topbar">
+    <div class="brand"><span class="tooth">🦷</span> Sunrise Dental Clinic</div>
+    <div class="user-info">
+        <span id="welcomeName">Loading...</span>
+        <button id="logoutBtn">Logout</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <a href="dashboard.html">&larr; Back to Menu</a>
+        <h1>Search Appointment</h1>
+        <p class="subtitle">Search by exact appointment number, or by patient name</p>
+
+        <div id="searchAlert" class="alert"></div>
+
+        <div class="form-row">
+            <div class="field">
+                <label for="apptNoInput">Appointment Number</label>
+                <input type="text" id="apptNoInput" placeholder="e.g. APT20260807-001">
+            </div>
+            <div class="field">
+                <label for="nameInput">Patient Name</label>
+                <input type="text" id="nameInput" placeholder="e.g. Kasun">
+            </div>
+        </div>
+        <div class="btn-row">
+            <button class="btn" id="searchBtn">Search</button>
+        </div>
+    </div>
+
+    <div class="card" id="resultsCard" style="display:none;">
+        <h2>Results</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Appt No</th><th>Patient</th><th>Contact</th><th>Dentist</th>
+                    <th>Treatment</th><th>Date</th><th>Time</th><th>Status</th><th></th>
+                </tr>
+            </thead>
+            <tbody id="resultsBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script>
+    (async function init() {
+        await requireLogin();
+        attachLogoutButton();
+    })();
+
+    document.getElementById('searchBtn').addEventListener('click', doSearch);
+    document.getElementById('apptNoInput').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+    document.getElementById('nameInput').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+    async function doSearch() {
+        hideAlert('searchAlert');
+        document.getElementById('resultsCard').style.display = 'none';
+
+        const apptNo = document.getElementById('apptNoInput').value.trim();
+        const name = document.getElementById('nameInput').value.trim();
+
+        if (!apptNo && !name) {
+            showAlert('searchAlert', 'Enter an appointment number or a patient name.', 'error');
+            return;
+        }
+
+        let url = 'api/appointments/search?';
+        url += apptNo ? 'appointmentNo=' + encodeURIComponent(apptNo)
+                       : 'patientName=' + encodeURIComponent(name);
+
+        const data = await apiCall(url, 'GET');
+        if (!data.success) {
+            showAlert('searchAlert', data.message || 'No results found.', 'error');
+            return;
+        }
+
+        const body = document.getElementById('resultsBody');
+        body.innerHTML = '';
+        data.appointments.forEach(a => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${a.appointmentNo}</td><td>${a.patientName}</td><td>${a.contactNumber}</td>` +
+                `<td>${a.dentistName}</td><td>${a.treatmentType}</td><td>${a.appointmentDate}</td>` +
+                `<td>${a.appointmentTime}</td><td><span class="status-badge ${a.status}">${a.status}</span></td>` +
+                `<td><a class="btn small secondary" href="bill.html?appointmentNo=${encodeURIComponent(a.appointmentNo)}">Bill</a></td>`;
+            body.appendChild(tr);
+        });
+        document.getElementById('resultsCard').style.display = 'block';
+    }
+</script>
+</body>
+</html>

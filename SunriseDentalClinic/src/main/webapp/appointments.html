@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>All Appointments - Sunrise Dental Clinic</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="topbar">
+    <div class="brand"><span class="tooth">🦷</span> Sunrise Dental Clinic</div>
+    <div class="user-info">
+        <span id="welcomeName">Loading...</span>
+        <button id="logoutBtn">Logout</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <a href="dashboard.html">&larr; Back to Menu</a>
+        <h1>All Appointments</h1>
+        <p class="subtitle">View, edit, cancel or mark appointments as completed</p>
+        <div id="listAlert" class="alert"></div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Appt No</th><th>Patient</th><th>Dentist</th><th>Treatment</th>
+                    <th>Date</th><th>Time</th><th>Status</th><th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="listBody"></tbody>
+        </table>
+    </div>
+
+    <!-- Edit panel, hidden until "Edit" is clicked -->
+    <div class="card" id="editCard" style="display:none;">
+        <h2>Edit Appointment <span id="editApptNo"></span></h2>
+        <div id="editAlert" class="alert"></div>
+        <form id="editForm">
+            <div class="form-row">
+                <div class="field">
+                    <label>Patient Name *</label>
+                    <input type="text" id="editPatientName" required>
+                </div>
+                <div class="field">
+                    <label>Contact Number *</label>
+                    <input type="tel" id="editContactNumber" required>
+                </div>
+            </div>
+            <div class="field">
+                <label>Address *</label>
+                <textarea id="editAddress" rows="2" required></textarea>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <label>Dentist *</label>
+                    <select id="editDentistName" required></select>
+                </div>
+                <div class="field">
+                    <label>Treatment Type *</label>
+                    <select id="editTreatmentType" required></select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="field">
+                    <label>Appointment Date *</label>
+                    <input type="date" id="editAppointmentDate" required>
+                </div>
+                <div class="field">
+                    <label>Appointment Time *</label>
+                    <input type="time" id="editAppointmentTime" required>
+                </div>
+            </div>
+            <div class="btn-row">
+                <button type="submit" class="btn">Save Changes</button>
+                <button type="button" class="btn secondary" id="cancelEditBtn">Close</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script>
+    let currentEditNo = null;
+
+    (async function init() {
+        await requireLogin();
+        attachLogoutButton();
+        await loadDentistsInto('editDentistName');
+        await loadTreatmentsInto('editTreatmentType');
+        await loadList();
+    })();
+
+    async function loadList() {
+        hideAlert('listAlert');
+        const data = await apiCall('api/appointments/list', 'GET');
+        const body = document.getElementById('listBody');
+        body.innerHTML = '';
+
+        if (!data.success || data.appointments.length === 0) {
+            showAlert('listAlert', 'No appointments have been registered yet.', 'info');
+            return;
+        }
+
+        data.appointments.forEach(a => {
+            const tr = document.createElement('tr');
+            const disabled = a.status !== 'SCHEDULED' ? 'disabled' : '';
+            tr.innerHTML = `<td>${a.appointmentNo}</td><td>${a.patientName}</td><td>${a.dentistName}</td>` +
+                `<td>${a.treatmentType}</td><td>${a.appointmentDate}</td><td>${a.appointmentTime}</td>` +
+                `<td><span class="status-badge ${a.status}">${a.status}</span></td>` +
+                `<td>
+                    <button class="btn small secondary" ${disabled} onclick="openEdit('${a.appointmentNo}')">Edit</button>
+                    <button class="btn small" ${disabled} onclick="completeAppt('${a.appointmentNo}')">Complete</button>
+                    <button class="btn small danger" ${disabled} onclick="cancelAppt('${a.appointmentNo}')">Cancel</button>
+                 </td>`;
+            body.appendChild(tr);
+        });
+    }
+
+    async function openEdit(appointmentNo) {
+        const data = await apiCall('api/appointments/search?appointmentNo=' + encodeURIComponent(appointmentNo), 'GET');
+        if (!data.success) { alert(data.message); return; }
+        const a = data.appointments[0];
+        currentEditNo = a.appointmentNo;
+
+        document.getElementById('editApptNo').textContent = '(' + a.appointmentNo + ')';
+        document.getElementById('editPatientName').value = a.patientName;
+        document.getElementById('editContactNumber').value = a.contactNumber;
+        document.getElementById('editAddress').value = a.address;
+        document.getElementById('editDentistName').value = a.dentistName;
+        document.getElementById('editTreatmentType').value = a.treatmentType;
+        document.getElementById('editAppointmentDate').value = a.appointmentDate;
+        document.getElementById('editAppointmentTime').value = a.appointmentTime;
+
+        hideAlert('editAlert');
+        document.getElementById('editCard').style.display = 'block';
+        document.getElementById('editCard').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.getElementById('cancelEditBtn').addEventListener('click', () => {
+        document.getElementById('editCard').style.display = 'none';
+    });
+
+    document.getElementById('editForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const formData = {
+            appointmentNo: currentEditNo,
+            patientName: document.getElementById('editPatientName').value.trim(),
+            contactNumber: document.getElementById('editContactNumber').value.trim(),
+            address: document.getElementById('editAddress').value.trim(),
+            dentistName: document.getElementById('editDentistName').value,
+            treatmentType: document.getElementById('editTreatmentType').value,
+            appointmentDate: document.getElementById('editAppointmentDate').value,
+            appointmentTime: document.getElementById('editAppointmentTime').value
+        };
+        const data = await apiCall('api/appointments/update', 'POST', formData);
+        if (data.success) {
+            document.getElementById('editCard').style.display = 'none';
+            await loadList();
+        } else {
+            showAlert('editAlert', data.message || 'Could not update appointment.', 'error');
+        }
+    });
+
+    async function cancelAppt(appointmentNo) {
+        if (!confirm('Cancel appointment ' + appointmentNo + '?')) return;
+        const data = await apiCall('api/appointments/cancel', 'POST', { appointmentNo });
+        if (!data.success) alert(data.message);
+        await loadList();
+    }
+
+    async function completeAppt(appointmentNo) {
+        if (!confirm('Mark appointment ' + appointmentNo + ' as completed?')) return;
+        const data = await apiCall('api/appointments/complete', 'POST', { appointmentNo });
+        if (!data.success) alert(data.message);
+        await loadList();
+    }
+</script>
+</body>
+</html>

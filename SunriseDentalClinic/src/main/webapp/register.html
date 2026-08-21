@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Register Appointment - Sunrise Dental Clinic</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="topbar">
+    <div class="brand"><span class="tooth">🦷</span> Sunrise Dental Clinic</div>
+    <div class="user-info">
+        <span id="welcomeName">Loading...</span>
+        <button id="logoutBtn">Logout</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <a href="dashboard.html">&larr; Back to Menu</a>
+        <h1>Register New Appointment</h1>
+        <p class="subtitle">Enter patient and appointment details below</p>
+
+        <div id="formAlert" class="alert"></div>
+
+        <form id="registerForm">
+            <div class="form-row">
+                <div class="field">
+                    <label for="patientName">Patient Name *</label>
+                    <input type="text" id="patientName" name="patientName" required>
+                </div>
+                <div class="field">
+                    <label for="contactNumber">Contact Number *</label>
+                    <input type="tel" id="contactNumber" name="contactNumber" placeholder="07XXXXXXXX" required>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="address">Address *</label>
+                <textarea id="address" name="address" rows="2" required></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="field">
+                    <label for="dentistName">Dentist *</label>
+                    <select id="dentistName" name="dentistName" required>
+                        <option value="">-- Select Dentist --</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="treatmentType">Treatment Type *</label>
+                    <select id="treatmentType" name="treatmentType" required>
+                        <option value="">-- Select Treatment --</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="field">
+                    <label for="appointmentDate">Appointment Date *</label>
+                    <input type="date" id="appointmentDate" name="appointmentDate" required>
+                </div>
+                <div class="field">
+                    <label for="appointmentTime">Appointment Time *</label>
+                    <input type="time" id="appointmentTime" name="appointmentTime" required>
+                </div>
+            </div>
+
+            <div class="btn-row">
+                <button type="submit" class="btn">Register Appointment</button>
+                <button type="reset" class="btn secondary">Clear Form</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="card" id="successCard" style="display:none;">
+        <h2>✅ Appointment Confirmed</h2>
+        <p>Appointment number: <b id="newApptNo"></b></p>
+        <p>Please note this number down &mdash; it is needed to search, bill, or manage this appointment.</p>
+        <div class="btn-row">
+            <a class="btn" id="goToBillBtn" href="#">Generate Bill Now</a>
+            <a class="btn secondary" href="register.html">Register Another</a>
+        </div>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script>
+    (async function init() {
+        await requireLogin();
+        attachLogoutButton();
+        await loadDentistsInto('dentistName');
+        await loadTreatmentsInto('treatmentType');
+
+        // Prevent picking a past date in the date picker itself.
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('appointmentDate').setAttribute('min', today);
+    })();
+
+    document.getElementById('registerForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        hideAlert('formAlert');
+
+        const formData = {
+            patientName: document.getElementById('patientName').value.trim(),
+            address: document.getElementById('address').value.trim(),
+            contactNumber: document.getElementById('contactNumber').value.trim(),
+            dentistName: document.getElementById('dentistName').value,
+            treatmentType: document.getElementById('treatmentType').value,
+            appointmentDate: document.getElementById('appointmentDate').value,
+            appointmentTime: document.getElementById('appointmentTime').value
+        };
+
+        // Basic client-side checks (server re-validates everything).
+        if (!/^[0-9+\-\s]{7,15}$/.test(formData.contactNumber)) {
+            showAlert('formAlert', 'Please enter a valid contact number.', 'error');
+            return;
+        }
+
+        const data = await apiCall('api/appointments/register', 'POST', formData);
+        if (data.success) {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('successCard').style.display = 'block';
+            document.getElementById('newApptNo').textContent = data.appointmentNo;
+            document.getElementById('goToBillBtn').href = 'bill.html?appointmentNo=' + encodeURIComponent(data.appointmentNo);
+            document.getElementById('successCard').scrollIntoView({ behavior: 'smooth' });
+        } else {
+            showAlert('formAlert', data.message || 'Could not register appointment.', 'error');
+        }
+    });
+</script>
+</body>
+</html>

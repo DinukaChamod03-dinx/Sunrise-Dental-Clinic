@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Billing - Sunrise Dental Clinic</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="topbar no-print">
+    <div class="brand"><span class="tooth">🦷</span> Sunrise Dental Clinic</div>
+    <div class="user-info">
+        <span id="welcomeName">Loading...</span>
+        <button id="logoutBtn">Logout</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card no-print">
+        <a href="dashboard.html">&larr; Back to Menu</a>
+        <h1>Calculate &amp; Print Bill</h1>
+        <p class="subtitle">Enter the appointment number to generate the patient's receipt</p>
+
+        <div id="billAlert" class="alert"></div>
+
+        <div class="form-row">
+            <div class="field">
+                <label for="apptNoInput">Appointment Number *</label>
+                <input type="text" id="apptNoInput" placeholder="e.g. APT20260807-001">
+            </div>
+        </div>
+        <div class="btn-row">
+            <button class="btn" id="generateBtn">Generate Bill</button>
+        </div>
+    </div>
+
+    <div class="card" id="receiptCard" style="display:none;">
+        <div class="receipt" id="receiptContent">
+            <h2>🦷 Sunrise Dental Clinic</h2>
+            <p class="clinic-sub">Colombo, Sri Lanka &mdash; Patient Receipt</p>
+            <table>
+                <tr><td>Appointment No:</td><td id="rAppt"></td></tr>
+                <tr><td>Patient Name:</td><td id="rPatient"></td></tr>
+                <tr><td>Dentist:</td><td id="rDentist"></td></tr>
+                <tr><td>Treatment:</td><td id="rTreatment"></td></tr>
+                <tr><td>Appointment Date:</td><td id="rDate"></td></tr>
+                <tr><td>Treatment Cost:</td><td id="rTreatCost"></td></tr>
+                <tr><td>Consultation Fee:</td><td id="rConsult"></td></tr>
+                <tr class="total-row"><td>Total Amount:</td><td id="rTotal"></td></tr>
+            </table>
+        </div>
+        <div class="btn-row no-print">
+            <button class="btn" onclick="window.print()">🖨️ Print Receipt</button>
+            <a class="btn secondary" href="bill.html">New Bill</a>
+        </div>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script>
+    (async function init() {
+        await requireLogin();
+        attachLogoutButton();
+
+        const params = new URLSearchParams(window.location.search);
+        const preset = params.get('appointmentNo');
+        if (preset) {
+            document.getElementById('apptNoInput').value = preset;
+            generateBill();
+        }
+    })();
+
+    document.getElementById('generateBtn').addEventListener('click', generateBill);
+    document.getElementById('apptNoInput').addEventListener('keydown', e => { if (e.key === 'Enter') generateBill(); });
+
+    async function generateBill() {
+        hideAlert('billAlert');
+        document.getElementById('receiptCard').style.display = 'none';
+
+        const apptNo = document.getElementById('apptNoInput').value.trim();
+        if (!apptNo) {
+            showAlert('billAlert', 'Please enter an appointment number.', 'error');
+            return;
+        }
+
+        const data = await apiCall('api/bill/generate', 'POST', { appointmentNo: apptNo });
+        if (!data.success) {
+            showAlert('billAlert', data.message || 'Could not generate bill.', 'error');
+            return;
+        }
+
+        document.getElementById('rAppt').textContent = data.appointmentNo;
+        document.getElementById('rPatient').textContent = data.patientName;
+        document.getElementById('rDentist').textContent = data.dentistName;
+        document.getElementById('rTreatment').textContent = data.treatmentType;
+        document.getElementById('rDate').textContent = data.appointmentDate;
+        document.getElementById('rTreatCost').textContent = formatCurrency(data.treatmentCost);
+        document.getElementById('rConsult').textContent = formatCurrency(data.consultationFee);
+        document.getElementById('rTotal').textContent = formatCurrency(data.totalAmount);
+
+        document.getElementById('receiptCard').style.display = 'block';
+        document.getElementById('receiptCard').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+</body>
+</html>

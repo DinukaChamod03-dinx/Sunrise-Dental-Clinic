@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard - Sunrise Dental Clinic</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="topbar">
+    <div class="brand"><span class="tooth">🦷</span> Sunrise Dental Clinic</div>
+    <div class="user-info">
+        <span id="welcomeName">Loading...</span>
+        <button id="logoutBtn">Logout</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <h1>Main Menu</h1>
+        <p class="subtitle">Select an option to continue</p>
+
+        <div class="menu-grid">
+            <a class="menu-tile" href="register.html">
+                <span class="icon">📝</span>
+                <div class="title">Register Appointment</div>
+                <div class="desc">Add a new patient &amp; book an appointment</div>
+            </a>
+            <a class="menu-tile" href="search.html">
+                <span class="icon">🔍</span>
+                <div class="title">Search Appointment</div>
+                <div class="desc">Find by appointment number or patient</div>
+            </a>
+            <a class="menu-tile" href="appointments.html">
+                <span class="icon">📋</span>
+                <div class="title">All Appointments</div>
+                <div class="desc">View, edit, cancel or complete bookings</div>
+            </a>
+            <a class="menu-tile" href="bill.html">
+                <span class="icon">🧾</span>
+                <div class="title">Billing</div>
+                <div class="desc">Calculate and print a patient receipt</div>
+            </a>
+            <a class="menu-tile" href="help.html">
+                <span class="icon">❓</span>
+                <div class="title">Help</div>
+                <div class="desc">Step-by-step instructions for staff</div>
+            </a>
+            <a class="menu-tile" href="#" id="exitTile">
+                <span class="icon">🚪</span>
+                <div class="title">Exit System</div>
+                <div class="desc">Log out and close the session safely</div>
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Today's Appointments</h2>
+        <div id="todayAlert" class="alert"></div>
+        <table id="todayTable">
+            <thead>
+                <tr>
+                    <th>Appt No</th><th>Patient</th><th>Dentist</th>
+                    <th>Treatment</th><th>Time</th><th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="todayBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script>
+    (async function init() {
+        await requireLogin();
+        attachLogoutButton();
+
+        document.getElementById('exitTile').addEventListener('click', function (e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to log out and exit the system?')) {
+                logout();
+            }
+        });
+
+        const data = await apiCall('api/appointments/list?today=true', 'GET');
+        const body = document.getElementById('todayBody');
+        if (!data.success || data.appointments.length === 0) {
+            showAlert('todayAlert', 'No appointments scheduled for today.', 'info');
+            return;
+        }
+        data.appointments.forEach(a => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td>${a.appointmentNo}</td><td>${a.patientName}</td>` +
+                `<td>${a.dentistName}</td><td>${a.treatmentType}</td>` +
+                `<td>${a.appointmentTime}</td>` +
+                `<td><span class="status-badge ${a.status}">${a.status}</span></td>`;
+            body.appendChild(tr);
+        });
+    })();
+</script>
+</body>
+</html>

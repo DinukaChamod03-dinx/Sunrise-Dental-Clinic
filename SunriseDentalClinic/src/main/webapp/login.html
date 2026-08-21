@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login - Sunrise Dental Clinic</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="login-wrap">
+    <div class="login-card">
+        <div class="logo">🦷</div>
+        <h1>Sunrise Dental Clinic</h1>
+        <p class="subtitle">Appointment &amp; Patient Management System</p>
+
+        <div id="loginAlert" class="alert"></div>
+
+        <form id="loginForm">
+            <div class="field">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" autocomplete="username" required>
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" autocomplete="current-password" required>
+            </div>
+            <button type="submit" class="btn">Login</button>
+        </form>
+
+        <p class="login-hint">
+           
+        </p>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script>
+    // If arrived here because a session expired, show a friendly notice.
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('expired') === '1') {
+        showAlert('loginAlert', 'Your session expired. Please log in again.', 'info');
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        hideAlert('loginAlert');
+
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (!username || !password) {
+            showAlert('loginAlert', 'Please enter both username and password.', 'error');
+            return;
+        }
+
+        const data = await apiCall('api/login', 'POST', { username, password });
+        if (data.success) {
+            window.location.href = 'dashboard.html';
+        } else {
+            showAlert('loginAlert', data.message || 'Login failed.', 'error');
+        }
+    });
+</script>
+</body>
+</html>

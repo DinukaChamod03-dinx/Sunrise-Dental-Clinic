@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Help - Sunrise Dental Clinic</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="topbar">
+    <div class="brand"><span class="tooth">🦷</span> Sunrise Dental Clinic</div>
+    <div class="user-info">
+        <span id="welcomeName">Loading...</span>
+        <button id="logoutBtn">Logout</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card">
+        <a href="dashboard.html">&larr; Back to Menu</a>
+        <h1>Help &amp; Instructions</h1>
+        <p class="subtitle">A quick guide for new front-desk staff</p>
+
+        <div class="help-step">
+            <div class="num">1</div>
+            <div class="content">
+                <h3>Logging in</h3>
+                <p>Use the username and password given to you by the clinic administrator. If you enter the wrong details, the system will show an error and let you try again.</p>
+            </div>
+        </div>
+
+        <div class="help-step">
+            <div class="num">2</div>
+            <div class="content">
+                <h3>Registering a new appointment</h3>
+                <p>From the main menu choose "Register Appointment". Fill in the patient's name, address, contact number, choose the dentist and treatment, and pick a date and time. The system automatically creates a unique appointment number and blocks double-bookings for the same dentist and time slot.</p>
+            </div>
+        </div>
+
+        <div class="help-step">
+            <div class="num">3</div>
+            <div class="content">
+                <h3>Finding an appointment</h3>
+                <p>Choose "Search Appointment" and type the exact appointment number, or a patient's name (partial names work too), then press Search.</p>
+            </div>
+        </div>
+
+        <div class="help-step">
+            <div class="num">4</div>
+            <div class="content">
+                <h3>Managing appointments</h3>
+                <p>Open "All Appointments" to see every booking. From there you can edit patient details, mark a visit as completed once treatment is done, or cancel an appointment if the patient does not show up.</p>
+            </div>
+        </div>
+
+        <div class="help-step">
+            <div class="num">5</div>
+            <div class="content">
+                <h3>Billing a patient</h3>
+                <p>Open "Billing", enter the appointment number, and click "Generate Bill". The system automatically calculates the treatment cost plus the standard consultation fee. Click "Print Receipt" to print a copy for the patient.</p>
+            </div>
+        </div>
+
+        <div class="help-step">
+            <div class="num">6</div>
+            <div class="content">
+                <h3>Logging out</h3>
+                <p>Always click "Logout" (or "Exit System" from the main menu) when you are finished, especially on shared computers, so patient data stays secure.</p>
+            </div>
+        </div>
+
+        <div class="help-step">
+            <div class="num">!</div>
+            <div class="content">
+                <h3>Need more help?</h3>
+                <p>Contact the clinic administrator if you are locked out, see an unexpected error, or need a password reset.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script>
+    (async function init() {
+        await requireLogin();
+        attachLogoutButton();
+    })();
+</script>
+</body>
+</html>
