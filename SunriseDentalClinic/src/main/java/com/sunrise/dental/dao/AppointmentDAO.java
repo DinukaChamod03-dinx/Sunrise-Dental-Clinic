@@ -168,6 +168,9 @@ public class AppointmentDAO {
         return false;
     }
 
+    //cancels appointment
+    
+
     public boolean markCompleted(String appointmentNo) {
         String sql = "UPDATE appointments SET status='COMPLETED' WHERE appointment_no=?";
         try (Connection con = DBConnection.getConnection();
