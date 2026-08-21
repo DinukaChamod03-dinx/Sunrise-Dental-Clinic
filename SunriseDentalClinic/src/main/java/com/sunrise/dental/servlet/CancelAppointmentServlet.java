@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+// Appointment Api
+
+
 @WebServlet("/api/appointments/cancel")
 public class CancelAppointmentServlet extends HttpServlet {
 

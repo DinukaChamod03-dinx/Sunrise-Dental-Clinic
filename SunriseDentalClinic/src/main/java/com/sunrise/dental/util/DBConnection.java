@@ -10,7 +10,7 @@ public class DBConnection {
             "jdbc:mysql://localhost:3306/dental_clinic_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
 
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "oy@me#Cpa0";
+    private static final String DB_PASSWORD = "root";
 
     static {
         try {
