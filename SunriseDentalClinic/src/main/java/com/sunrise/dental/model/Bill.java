@@ -10,6 +10,8 @@ public class Bill {
     private double totalAmount;
     private String billDate;
 
+// bill class model
+
     public Bill() {}
 
     public int getBillId() { return billId; }
