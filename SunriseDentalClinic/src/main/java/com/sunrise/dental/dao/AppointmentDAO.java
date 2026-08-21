@@ -31,6 +31,8 @@ public class AppointmentDAO {
         return prefix + System.currentTimeMillis();
     }
 
+    //appointment number format in date 
+
     /** Returns true if the chosen dentist already has an active appointment at the same date & time. */
     public boolean isDoubleBooked(String dentistName, String appointmentDate, String appointmentTime, String excludeAppointmentNo) {
         String sql = "SELECT COUNT(*) FROM appointments WHERE dentist_name = ? AND appointment_date = ? " +
