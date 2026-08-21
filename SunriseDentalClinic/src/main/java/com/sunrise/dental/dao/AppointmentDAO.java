@@ -52,6 +52,8 @@ public class AppointmentDAO {
         return false;
     }
 
+    //appoinment date, time
+
     public boolean addAppointment(Appointment a) {
         String sql = "INSERT INTO appointments (appointment_no, patient_name, address, contact_number, " +
                      "dentist_name, treatment_type, appointment_date, appointment_time, status, created_at) " +
