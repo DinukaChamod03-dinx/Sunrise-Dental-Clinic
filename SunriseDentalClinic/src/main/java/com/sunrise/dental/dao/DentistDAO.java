@@ -22,6 +22,6 @@ public class DentistDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return list;
+        return list; 
     }
 }
