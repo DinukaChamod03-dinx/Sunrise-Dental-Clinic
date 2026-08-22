@@ -46,6 +46,7 @@ public class Appointment {
     public String getAppointmentTime() { return appointmentTime; }
     public void setAppointmentTime(String appointmentTime) { this.appointmentTime = appointmentTime; }
 
+    //ststus
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
 
