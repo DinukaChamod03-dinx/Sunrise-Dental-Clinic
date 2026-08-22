@@ -10,6 +10,9 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
+
+//Appointment Api
+
 /** Returns the list of dentists, used to populate dropdowns on the frontend. */
 @WebServlet("/api/dentists")
 public class DentistServlet extends HttpServlet {
