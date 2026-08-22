@@ -18,6 +18,7 @@ public class Appointment {
     public String getAppointmentNo() { return appointmentNo; }
     public void setAppointmentNo(String appointmentNo) { this.appointmentNo = appointmentNo; }
 
+    //patientName
     public String getPatientName() { return patientName; }
     public void setPatientName(String patientName) { this.patientName = patientName; }
 
