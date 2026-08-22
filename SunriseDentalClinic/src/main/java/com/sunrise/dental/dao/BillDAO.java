@@ -24,6 +24,8 @@ public class BillDAO {
         }
         return false;
     }
+    
+    //bill 
 
     public Bill getLatestBillForAppointment(String appointmentNo) {
         String sql = "SELECT * FROM bills WHERE appointment_no = ? ORDER BY bill_id DESC LIMIT 1";
