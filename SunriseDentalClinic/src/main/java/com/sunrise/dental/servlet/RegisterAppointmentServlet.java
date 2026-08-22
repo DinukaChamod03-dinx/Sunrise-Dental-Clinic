@@ -67,6 +67,8 @@ public class RegisterAppointmentServlet extends HttpServlet {
                             appointmentTime + " on " + appointmentDate + ". Please choose another slot.") + "}");
             return;
         }
+        
+        // appointmentDate, Time edit
 
         String appointmentNo = dao.generateAppointmentNo(appointmentDate);
 
