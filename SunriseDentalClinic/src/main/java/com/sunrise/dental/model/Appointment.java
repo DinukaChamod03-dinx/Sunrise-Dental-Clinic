@@ -14,6 +14,7 @@ public class Appointment {
 
     public Appointment() {}
 
+    //appointmentNo
     public String getAppointmentNo() { return appointmentNo; }
     public void setAppointmentNo(String appointmentNo) { this.appointmentNo = appointmentNo; }
 
