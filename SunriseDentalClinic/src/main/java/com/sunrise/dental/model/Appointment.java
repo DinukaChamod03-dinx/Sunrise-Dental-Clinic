@@ -22,6 +22,7 @@ public class Appointment {
     public String getPatientName() { return patientName; }
     public void setPatientName(String patientName) { this.patientName = patientName; }
 
+    //address
     public String getAddress() { return address; }
     public void setAddress(String address) { this.address = address; }
 
