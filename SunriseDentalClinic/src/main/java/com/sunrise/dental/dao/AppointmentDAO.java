@@ -183,6 +183,8 @@ public class AppointmentDAO {
         return false;
     }
 
+    
+
     private Appointment mapRow(ResultSet rs) throws SQLException {
         Appointment a = new Appointment();
         a.setAppointmentNo(rs.getString("appointment_no"));
