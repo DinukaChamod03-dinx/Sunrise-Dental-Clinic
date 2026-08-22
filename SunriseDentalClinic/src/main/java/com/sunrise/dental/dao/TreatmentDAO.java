@@ -41,6 +41,9 @@ public class TreatmentDAO {
         return null;
     }
 
+
+    //add bill consulation fee
+
     /** Fixed consultation fee added to every bill. Kept in one place for easy editing. */
     public static final double CONSULTATION_FEE = 500.00;
 }
