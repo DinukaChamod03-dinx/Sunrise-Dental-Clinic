@@ -38,6 +38,7 @@ public class Appointment {
     public String getTreatmentType() { return treatmentType; }
     public void setTreatmentType(String treatmentType) { this.treatmentType = treatmentType; }
 
+    //appointmentDate
     public String getAppointmentDate() { return appointmentDate; }
     public void setAppointmentDate(String appointmentDate) { this.appointmentDate = appointmentDate; }
 
