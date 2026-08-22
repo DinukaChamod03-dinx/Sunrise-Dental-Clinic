@@ -26,6 +26,7 @@ public class Appointment {
     public String getAddress() { return address; }
     public void setAddress(String address) { this.address = address; }
 
+    //contactNumber
     public String getContactNumber() { return contactNumber; }
     public void setContactNumber(String contactNumber) { this.contactNumber = contactNumber; }
 
