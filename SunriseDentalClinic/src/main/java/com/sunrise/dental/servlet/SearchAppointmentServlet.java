@@ -10,10 +10,14 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.List;
 
+
 /**
  * Searches an appointment either by exact appointment number (?appointmentNo=...)
  * or by partial patient name (?patientName=...).
  */
+
+//appointment searches 
+
 @WebServlet("/api/appointments/search")
 public class SearchAppointmentServlet extends HttpServlet {
 
