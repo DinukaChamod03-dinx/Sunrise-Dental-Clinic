@@ -53,7 +53,7 @@ public class UpdateAppointmentServlet extends HttpServlet {
 
         //appointment list 
 
-        
+
         Appointment a = new Appointment();
         a.setAppointmentNo(appointmentNo);
         a.setPatientName(patientName);
@@ -78,3 +78,7 @@ public class UpdateAppointmentServlet extends HttpServlet {
     private String trim(String s) { return s == null ? "" : s.trim(); }
     private boolean isEmpty(String s) { return s == null || s.trim().isEmpty(); }
 }
+
+
+//update appointment service 
+
