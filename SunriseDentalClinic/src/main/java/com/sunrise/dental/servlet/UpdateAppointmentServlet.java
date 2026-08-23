@@ -50,6 +50,10 @@ public class UpdateAppointmentServlet extends HttpServlet {
             return;
         }
 
+
+        //appointment list 
+
+        
         Appointment a = new Appointment();
         a.setAppointmentNo(appointmentNo);
         a.setPatientName(patientName);
