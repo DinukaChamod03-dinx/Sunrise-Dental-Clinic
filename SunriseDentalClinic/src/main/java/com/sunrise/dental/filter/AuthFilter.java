@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+//authfilter
+
 /**
  * Protects every servlet under /api/* (except /api/login) from being called
  * without an active, authenticated session.
