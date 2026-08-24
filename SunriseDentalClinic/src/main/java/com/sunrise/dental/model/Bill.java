@@ -14,6 +14,7 @@ public class Bill {
 
     public Bill() {}
 
+    //billid
     public int getBillId() { return billId; }
     public void setBillId(int billId) { this.billId = billId; }
 
