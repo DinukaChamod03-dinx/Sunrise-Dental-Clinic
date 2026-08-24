@@ -18,6 +18,7 @@ public class Bill {
     public int getBillId() { return billId; }
     public void setBillId(int billId) { this.billId = billId; }
 
+    //appointmentno
     public String getAppointmentNo() { return appointmentNo; }
     public void setAppointmentNo(String appointmentNo) { this.appointmentNo = appointmentNo; }
 
