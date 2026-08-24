@@ -30,6 +30,7 @@ public class Bill {
     public String getTreatmentType() { return treatmentType; }
     public void setTreatmentType(String treatmentType) { this.treatmentType = treatmentType; }
 
+    //treatmentcost
     public double getTreatmentCost() { return treatmentCost; }
     public void setTreatmentCost(double treatmentCost) { this.treatmentCost = treatmentCost; }
 
