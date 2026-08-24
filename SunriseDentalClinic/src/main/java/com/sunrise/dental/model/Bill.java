@@ -34,6 +34,7 @@ public class Bill {
     public double getTreatmentCost() { return treatmentCost; }
     public void setTreatmentCost(double treatmentCost) { this.treatmentCost = treatmentCost; }
 
+    //consultationfee
     public double getConsultationFee() { return consultationFee; }
     public void setConsultationFee(double consultationFee) { this.consultationFee = consultationFee; }
 
