@@ -22,6 +22,7 @@ public class Bill {
     public String getAppointmentNo() { return appointmentNo; }
     public void setAppointmentNo(String appointmentNo) { this.appointmentNo = appointmentNo; }
 
+    //patientname
     public String getPatientName() { return patientName; }
     public void setPatientName(String patientName) { this.patientName = patientName; }
 
