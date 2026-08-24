@@ -38,6 +38,7 @@ public class Bill {
     public double getConsultationFee() { return consultationFee; }
     public void setConsultationFee(double consultationFee) { this.consultationFee = consultationFee; }
 
+    //totalamount
     public double getTotalAmount() { return totalAmount; }
     public void setTotalAmount(double totalAmount) { this.totalAmount = totalAmount; }
 
