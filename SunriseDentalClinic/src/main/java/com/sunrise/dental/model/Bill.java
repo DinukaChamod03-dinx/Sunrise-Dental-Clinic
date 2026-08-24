@@ -26,6 +26,7 @@ public class Bill {
     public String getPatientName() { return patientName; }
     public void setPatientName(String patientName) { this.patientName = patientName; }
 
+    //tretmenttype
     public String getTreatmentType() { return treatmentType; }
     public void setTreatmentType(String treatmentType) { this.treatmentType = treatmentType; }
 
