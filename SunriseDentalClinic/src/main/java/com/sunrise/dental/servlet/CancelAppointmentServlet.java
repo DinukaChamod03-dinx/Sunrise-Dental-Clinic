@@ -29,6 +29,7 @@ public class CancelAppointmentServlet extends HttpServlet {
             return;
         }
 
+        //could not cancel the appointment
         boolean cancelled = dao.cancelAppointment(appointmentNo.trim());
         if (cancelled) {
             resp.getWriter().write("{" + JsonUtil.pairBool("success", true) + "," +
