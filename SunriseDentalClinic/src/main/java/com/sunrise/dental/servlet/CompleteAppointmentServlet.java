@@ -28,6 +28,7 @@ public class CompleteAppointmentServlet extends HttpServlet {
             return;
         }
 
+        //Appointment marked as completed
         boolean done = dao.markCompleted(appointmentNo.trim());
         if (done) {
             resp.getWriter().write("{" + JsonUtil.pairBool("success", true) + "," +
