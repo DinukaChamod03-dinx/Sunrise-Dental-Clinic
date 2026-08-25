@@ -18,6 +18,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
 
+                //username & password
         resp.setContentType("application/json");
         String username = req.getParameter("username");
         String password = req.getParameter("password");
