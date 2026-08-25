@@ -34,6 +34,7 @@ public class CompleteAppointmentServlet extends HttpServlet {
             resp.getWriter().write("{" + JsonUtil.pairBool("success", true) + "," +
                     JsonUtil.pair("message", "Appointment marked as completed.") + "}");
         } else {
+            //Could not update the appointment
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             resp.getWriter().write("{" + JsonUtil.pairBool("success", false) + "," +
                     JsonUtil.pair("message", "Could not update the appointment.") + "}");
