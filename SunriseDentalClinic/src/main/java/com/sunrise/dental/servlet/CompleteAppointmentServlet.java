@@ -20,6 +20,7 @@ public class CompleteAppointmentServlet extends HttpServlet {
         String appointmentNo = req.getParameter("appointmentNo");
         AppointmentDAO dao = new AppointmentDAO();
 
+        //appointment not found
         if (appointmentNo == null || appointmentNo.trim().isEmpty() || dao.getByAppointmentNo(appointmentNo) == null) {
             resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
             resp.getWriter().write("{" + JsonUtil.pairBool("success", false) + "," +
