@@ -55,6 +55,7 @@ public class BillServlet extends HttpServlet {
             return;
         }
 
+        //treatment
         TreatmentDAO treatmentDAO = new TreatmentDAO();
         Treatment treatment = treatmentDAO.getByName(appointment.getTreatmentType());
         double treatmentCost = (treatment != null) ? treatment.getCost() : 0.0;
