@@ -47,6 +47,7 @@ public class BillServlet extends HttpServlet {
             return;
         }
 
+        //cancelled appointment
         if ("CANCELLED".equals(appointment.getStatus())) {
             resp.setStatus(HttpServletResponse.SC_CONFLICT);
             resp.getWriter().write("{" + JsonUtil.pairBool("success", false) + "," +
