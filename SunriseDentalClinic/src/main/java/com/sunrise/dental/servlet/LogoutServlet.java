@@ -5,6 +5,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 
+//logout
 @WebServlet("/api/logout")
 public class LogoutServlet extends HttpServlet {
 
