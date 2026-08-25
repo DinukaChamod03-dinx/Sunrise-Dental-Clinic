@@ -17,6 +17,9 @@ import java.io.IOException;
  * Calculates and saves the bill for a given appointment:
  * total = treatment cost (by treatment type) + fixed consultation fee.
  */
+
+//apibill
+
 @WebServlet("/api/bill/generate")
 public class BillServlet extends HttpServlet {
 
