@@ -1,68 +1,1492 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Login - Sunrise Dental Clinic</title>
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-<div class="login-wrap">
-    <div class="login-card">
-        <div class="logo">🦷</div>
-        <h1>Sunrise Dental Clinic</h1>
-        <p class="subtitle">Appointment &amp; Patient Management System</p>
 
-        <div id="loginAlert" class="alert"></div>
+<style>
 
-        <form id="loginForm">
-            <div class="field">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" autocomplete="username" required>
-            </div>
-            <div class="field">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" autocomplete="current-password" required>
-            </div>
-            <button type="submit" class="btn">Login</button>
-        </form>
+/* =========================================================
+   RESET
+========================================================= */
 
-        <p class="login-hint">
-           
-        </p>
-    </div>
-</div>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-<script src="js/common.js"></script>
-<script>
-    // If arrived here because a session expired, show a friendly notice.
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('expired') === '1') {
-        showAlert('loginAlert', 'Your session expired. Please log in again.', 'info');
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    color:#1e293b;
+
+    background:
+        linear-gradient(
+            135deg,
+            #edfafa,
+            #f8fbfd 45%,
+            #eef4ff
+        );
+
+    overflow-x:hidden;
+}
+
+
+/* =========================================================
+   ANIMATED BACKGROUND
+========================================================= */
+
+.background-effect{
+    position:fixed;
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:-10;
+}
+
+.bg-circle{
+    position:absolute;
+
+    border-radius:50%;
+
+    filter:blur(16px);
+
+    animation:
+        bgMove
+        13s ease-in-out
+        infinite alternate;
+}
+
+.bg-one{
+    width:560px;
+    height:560px;
+
+    top:-230px;
+    right:-180px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(6,182,212,.24),
+            transparent 70%
+        );
+}
+
+.bg-two{
+    width:450px;
+    height:450px;
+
+    left:-190px;
+    bottom:-150px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(59,130,246,.15),
+            transparent 70%
+        );
+
+    animation-delay:-4s;
+}
+
+.bg-three{
+    width:360px;
+    height:360px;
+
+    left:42%;
+    top:35%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(16,185,129,.13),
+            transparent
+        );
+
+    animation-delay:-7s;
+}
+
+@keyframes bgMove{
+
+    from{
+        transform:
+            translate(0,0)
+            scale(1);
     }
 
-    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+    to{
+        transform:
+            translate(45px,35px)
+            scale(1.08);
+    }
+}
+
+
+/* =========================================================
+   LOGIN PAGE
+========================================================= */
+
+.login-wrap{
+    min-height:100vh;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:35px;
+}
+
+
+/* =========================================================
+   LOGIN SHELL
+========================================================= */
+
+.login-shell{
+    width:100%;
+    max-width:1050px;
+
+    min-height:610px;
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    background:
+        rgba(255,255,255,.94);
+
+    border:
+        1px solid
+        rgba(255,255,255,.98);
+
+    border-radius:32px;
+
+    overflow:hidden;
+
+    box-shadow:
+        0 30px 80px
+        rgba(15,23,42,.12);
+
+    animation:
+        shellReveal
+        .8s ease both;
+}
+
+@keyframes shellReveal{
+
+    from{
+        opacity:0;
+
+        transform:
+            translateY(25px)
+            scale(.98);
+    }
+
+    to{
+        opacity:1;
+
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   LEFT BRAND PANEL
+========================================================= */
+
+.brand-panel{
+    padding:55px 48px;
+
+    color:white;
+
+    position:relative;
+
+    overflow:hidden;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+
+    background:
+        linear-gradient(
+            145deg,
+            #084c5c 0%,
+            #087b83 55%,
+            #0d9488 100%
+        );
+}
+
+
+/* DECORATION */
+
+.brand-panel::before{
+    content:"";
+
+    position:absolute;
+
+    width:350px;
+    height:350px;
+
+    right:-170px;
+    top:-160px;
+
+    border-radius:50%;
+
+    border:
+        55px solid
+        rgba(255,255,255,.05);
+}
+
+.brand-panel::after{
+    content:"";
+
+    position:absolute;
+
+    width:260px;
+    height:260px;
+
+    left:-130px;
+    bottom:-120px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.045);
+}
+
+.brand-content{
+    position:relative;
+
+    z-index:3;
+}
+
+
+/* =========================================================
+   BRAND LOGO
+========================================================= */
+
+.brand-logo{
+    width:72px;
+    height:72px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:22px;
+
+    background:
+        rgba(255,255,255,.14);
+
+    border:
+        1px solid
+        rgba(255,255,255,.16);
+
+    backdrop-filter:blur(10px);
+
+    font-size:39px;
+
+    margin-bottom:30px;
+
+    box-shadow:
+        0 15px 30px
+        rgba(0,0,0,.08);
+
+    animation:
+        logoFloat
+        4s ease-in-out
+        infinite;
+}
+
+@keyframes logoFloat{
+
+    0%,100%{
+        transform:
+            translateY(0)
+            rotate(-2deg);
+    }
+
+    50%{
+        transform:
+            translateY(-8px)
+            rotate(3deg);
+    }
+}
+
+
+/* =========================================================
+   BRAND TEXT
+========================================================= */
+
+.system-label{
+    display:inline-block;
+
+    padding:
+        7px 11px;
+
+    border-radius:30px;
+
+    margin-bottom:18px;
+
+    background:
+        rgba(255,255,255,.09);
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    font-size:8px;
+
+    letter-spacing:1.5px;
+}
+
+.brand-panel h1{
+    max-width:420px;
+
+    font-size:
+        clamp(32px,4vw,48px);
+
+    line-height:1.06;
+
+    margin-bottom:17px;
+}
+
+.brand-panel h1 span{
+    color:#9cf5e6;
+}
+
+.brand-panel p{
+    max-width:420px;
+
+    color:
+        rgba(255,255,255,.68);
+
+    font-size:11px;
+
+    line-height:1.8;
+}
+
+
+/* =========================================================
+   FEATURES
+========================================================= */
+
+.feature-list{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:11px;
+
+    margin-top:32px;
+}
+
+.feature{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:9px;
+
+    color:
+        rgba(255,255,255,.72);
+}
+
+.feature-icon{
+    width:31px;
+    height:31px;
+
+    border-radius:10px;
+
+    flex-shrink:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+        rgba(255,255,255,.10);
+}
+
+
+/* =========================================================
+   BRAND FOOTER
+========================================================= */
+
+.brand-footer{
+    position:relative;
+
+    z-index:3;
+
+    font-size:8px;
+
+    letter-spacing:.8px;
+
+    color:
+        rgba(255,255,255,.43);
+
+    margin-top:35px;
+}
+
+
+/* =========================================================
+   LOGIN PANEL
+========================================================= */
+
+.login-panel{
+    padding:
+        55px 58px;
+
+    display:flex;
+
+    justify-content:center;
+
+    flex-direction:column;
+
+    position:relative;
+}
+
+
+/* =========================================================
+   LOGIN HEADER
+========================================================= */
+
+.login-top{
+    margin-bottom:30px;
+}
+
+.login-small{
+    display:flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    color:#0e7490;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    letter-spacing:1.2px;
+
+    margin-bottom:12px;
+}
+
+.login-small::before{
+    content:"";
+
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#14b8a6;
+
+    box-shadow:
+        0 0 0 5px
+        rgba(20,184,166,.09);
+}
+
+.login-panel h2{
+    font-size:31px;
+
+    color:#164e63;
+
+    margin-bottom:8px;
+}
+
+.login-subtitle{
+    color:#94a3b8;
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   ALERT
+========================================================= */
+
+.alert{
+    margin-bottom:18px;
+
+    border-radius:11px;
+}
+
+
+/* =========================================================
+   FIELD
+========================================================= */
+
+.field{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+    margin-bottom:18px;
+}
+
+.field label{
+    font-size:10px;
+
+    font-weight:700;
+
+    color:#526970;
+}
+
+
+/* =========================================================
+   INPUT WRAPPER
+========================================================= */
+
+.input-group{
+    position:relative;
+}
+
+.input-icon{
+    position:absolute;
+
+    left:14px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    font-size:16px;
+
+    opacity:.65;
+
+    z-index:2;
+}
+
+input{
+    width:100%;
+
+    height:50px;
+
+    padding:
+        0 45px 0 44px;
+
+    border:
+        1px solid #dce7ea;
+
+    border-radius:13px;
+
+    background:#f9fcfd;
+
+    color:#334155;
+
+    font-family:inherit;
+
+    font-size:12px;
+
+    outline:none;
+
+    transition:
+        border .2s ease,
+        box-shadow .2s ease,
+        background .2s ease,
+        transform .2s ease;
+}
+
+input:focus{
+    background:white;
+
+    border-color:#22b8bd;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(34,184,189,.10);
+
+    transform:translateY(-1px);
+}
+
+input::placeholder{
+    color:#b5c0c4;
+}
+
+
+/* =========================================================
+   PASSWORD TOGGLE
+========================================================= */
+
+.password-toggle{
+    position:absolute;
+
+    right:10px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    width:34px;
+    height:34px;
+
+    border:none;
+
+    border-radius:9px;
+
+    background:transparent;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    transition:.2s;
+}
+
+.password-toggle:hover{
+    background:#edf6f7;
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.login-btn{
+    width:100%;
+
+    min-height:50px;
+
+    border:none;
+
+    border-radius:13px;
+
+    margin-top:5px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0891b2,
+            #0f766e
+        );
+
+    color:white;
+
+    font-size:11px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 10px 24px
+        rgba(8,145,178,.20);
+
+    transition:.25s;
+}
+
+.login-btn:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 15px 30px
+        rgba(8,145,178,.29);
+}
+
+.login-btn:active{
+    transform:translateY(0);
+}
+
+
+/* =========================================================
+   SECURITY NOTE
+========================================================= */
+
+.security-note{
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:8px;
+
+    margin-top:22px;
+
+    padding-top:20px;
+
+    border-top:
+        1px solid #edf2f4;
+
+    color:#94a3b8;
+
+    font-size:8.5px;
+
+    line-height:1.6;
+}
+
+.security-icon{
+    font-size:14px;
+}
+
+
+/* =========================================================
+   LOADING BUTTON
+========================================================= */
+
+.login-btn.loading{
+    pointer-events:none;
+
+    opacity:.78;
+}
+
+.spinner{
+    width:15px;
+    height:15px;
+
+    border-radius:50%;
+
+    border:
+        2px solid rgba(255,255,255,.35);
+
+    border-top-color:white;
+
+    animation:
+        spin .7s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:850px){
+
+    .login-shell{
+        grid-template-columns:1fr;
+
+        max-width:600px;
+    }
+
+    .brand-panel{
+        padding:
+            40px 35px;
+    }
+
+    .feature-list{
+        display:grid;
+
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+    .feature{
+        flex-direction:column;
+
+        align-items:flex-start;
+
+        gap:6px;
+    }
+
+    .brand-footer{
+        display:none;
+    }
+
+}
+
+
+@media(max-width:550px){
+
+    .login-wrap{
+        padding:18px;
+    }
+
+    .login-shell{
+        border-radius:24px;
+    }
+
+    .brand-panel{
+        padding:
+            32px 25px;
+    }
+
+    .brand-panel h1{
+        font-size:31px;
+    }
+
+    .feature-list{
+        grid-template-columns:1fr;
+    }
+
+    .feature{
+        flex-direction:row;
+
+        align-items:center;
+    }
+
+    .login-panel{
+        padding:
+            35px 25px;
+    }
+
+    .login-panel h2{
+        font-size:27px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *{
+        animation:none !important;
+        transition:none !important;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
+
+<div class="background-effect">
+
+    <div class="bg-circle bg-one"></div>
+
+    <div class="bg-circle bg-two"></div>
+
+    <div class="bg-circle bg-three"></div>
+
+</div>
+
+
+
+<!-- =========================================================
+     LOGIN
+========================================================= -->
+
+<div class="login-wrap">
+
+
+<div class="login-shell">
+
+
+<!-- =========================================================
+     LEFT SIDE
+========================================================= -->
+
+<section class="brand-panel">
+
+
+    <div class="brand-content">
+
+
+        <div class="brand-logo">
+            🦷
+        </div>
+
+
+        <div class="system-label">
+            CLINIC MANAGEMENT SYSTEM
+        </div>
+
+
+        <h1>
+
+            Welcome to
+            <span>Sunrise Dental.</span>
+
+        </h1>
+
+
+        <p>
+
+            Securely access your clinic workspace to manage
+            patients, appointments, treatments and billing
+            from one organised system.
+
+        </p>
+
+
+
+        <div class="feature-list">
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    📅
+                </div>
+
+                Appointment Management
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    👤
+                </div>
+
+                Patient Management
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    🧾
+                </div>
+
+                Billing &amp; Receipts
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <div class="brand-footer">
+
+        SUNRISE DENTAL CLINIC
+        &nbsp; • &nbsp;
+        STAFF PORTAL
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     LOGIN FORM
+========================================================= -->
+
+<section class="login-panel">
+
+
+    <div class="login-top">
+
+
+        <div class="login-small">
+            SECURE STAFF ACCESS
+        </div>
+
+
+        <h2>
+            Sign in
+        </h2>
+
+
+        <p class="login-subtitle">
+
+            Enter your username and password
+            to continue to the clinic dashboard.
+
+        </p>
+
+
+    </div>
+
+
+
+    <div id="loginAlert"
+         class="alert">
+    </div>
+
+
+
+    <form id="loginForm">
+
+
+        <!-- USERNAME -->
+
+        <div class="field">
+
+
+            <label for="username">
+                Username
+            </label>
+
+
+            <div class="input-group">
+
+
+                <span class="input-icon">
+                    👤
+                </span>
+
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter your username"
+                    autocomplete="username"
+                    required>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- PASSWORD -->
+
+        <div class="field">
+
+
+            <label for="password">
+                Password
+            </label>
+
+
+            <div class="input-group">
+
+
+                <span class="input-icon">
+                    🔒
+                </span>
+
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required>
+
+
+                <button
+                    type="button"
+                    class="password-toggle"
+                    id="passwordToggle"
+                    aria-label="Show or hide password">
+
+                    👁️
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- LOGIN -->
+
+        <button
+            type="submit"
+            class="login-btn"
+            id="loginBtn">
+
+            <span id="loginButtonText">
+                Login to Dashboard
+            </span>
+
+            <span>
+                →
+            </span>
+
+        </button>
+
+
+    </form>
+
+
+
+    <div class="security-note">
+
+
+        <span class="security-icon">
+            🔐
+        </span>
+
+
+        <span>
+
+            This system is intended for authorised
+            Sunrise Dental Clinic staff only.
+
+        </span>
+
+
+    </div>
+
+
+</section>
+
+
+</div>
+
+
+</div>
+
+
+
+<script src="js/common.js"></script>
+
+
+<script>
+
+/* =========================================================
+   SESSION EXPIRED MESSAGE
+========================================================= */
+
+const params =
+new URLSearchParams(
+    window.location.search
+);
+
+
+if(
+    params.get('expired') === '1'
+){
+
+    showAlert(
+
+        'loginAlert',
+
+        'Your session expired. Please log in again.',
+
+        'info'
+
+    );
+
+}
+
+
+
+/* =========================================================
+   PASSWORD SHOW / HIDE
+========================================================= */
+
+const passwordInput =
+document.getElementById(
+    'password'
+);
+
+
+const passwordToggle =
+document.getElementById(
+    'passwordToggle'
+);
+
+
+passwordToggle.addEventListener(
+
+    'click',
+
+    function(){
+
+
+        const isPassword =
+
+        passwordInput.type ===
+        'password';
+
+
+        passwordInput.type =
+
+        isPassword
+        ?
+        'text'
+        :
+        'password';
+
+
+        passwordToggle.textContent =
+
+        isPassword
+        ?
+        '🙈'
+        :
+        '👁️';
+
+    }
+
+);
+
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+document
+.getElementById(
+    'loginForm'
+)
+.addEventListener(
+
+    'submit',
+
+    async function(e){
+
+
         e.preventDefault();
-        hideAlert('loginAlert');
 
-        const username = document.getElementById('username').value.trim();
-        const password = document.getElementById('password').value;
 
-        if (!username || !password) {
-            showAlert('loginAlert', 'Please enter both username and password.', 'error');
+        hideAlert(
+            'loginAlert'
+        );
+
+
+
+        const username =
+
+        document
+        .getElementById(
+            'username'
+        )
+        .value
+        .trim();
+
+
+
+        const password =
+
+        document
+        .getElementById(
+            'password'
+        )
+        .value;
+
+
+
+        /* VALIDATION */
+
+        if(
+            !username ||
+            !password
+        ){
+
+
+            showAlert(
+
+                'loginAlert',
+
+                'Please enter both username and password.',
+
+                'error'
+
+            );
+
+
             return;
+
         }
 
-        const data = await apiCall('api/login', 'POST', { username, password });
-        if (data.success) {
-            window.location.href = 'dashboard.html';
-        } else {
-            showAlert('loginAlert', data.message || 'Login failed.', 'error');
+
+
+        /* LOADING STATE */
+
+        const loginBtn =
+
+        document
+        .getElementById(
+            'loginBtn'
+        );
+
+
+        loginBtn.classList.add(
+            'loading'
+        );
+
+
+        loginBtn.innerHTML =
+
+        `
+            <span class="spinner"></span>
+            Signing in...
+        `;
+
+
+
+        try{
+
+
+            const data =
+
+            await apiCall(
+
+                'api/login',
+
+                'POST',
+
+                {
+                    username,
+                    password
+                }
+
+            );
+
+
+
+            if(
+                data.success
+            ){
+
+
+                loginBtn.innerHTML =
+
+                `
+                    ✓ Login Successful
+                `;
+
+
+                window.location.href =
+                'dashboard.html';
+
+            }
+
+
+            else{
+
+
+                showAlert(
+
+                    'loginAlert',
+
+                    data.message
+                    ||
+                    'Login failed.',
+
+                    'error'
+
+                );
+
+
+                resetLoginButton();
+
+            }
+
+
         }
-    });
+
+
+        catch(error){
+
+
+            console.error(
+                'Login error:',
+                error
+            );
+
+
+            showAlert(
+
+                'loginAlert',
+
+                'Unable to login. Please try again.',
+
+                'error'
+
+            );
+
+
+            resetLoginButton();
+
+        }
+
+
+    }
+
+);
+
+
+
+/* =========================================================
+   RESET LOGIN BUTTON
+========================================================= */
+
+function resetLoginButton(){
+
+
+    const loginBtn =
+
+    document
+    .getElementById(
+        'loginBtn'
+    );
+
+
+    loginBtn
+    .classList
+    .remove(
+        'loading'
+    );
+
+
+    loginBtn.innerHTML =
+
+    `
+        <span>
+            Login to Dashboard
+        </span>
+
+        <span>
+            →
+        </span>
+    `;
+
+}
+
 </script>
+
+
 </body>
 </html>
-
-
-
-//login html 

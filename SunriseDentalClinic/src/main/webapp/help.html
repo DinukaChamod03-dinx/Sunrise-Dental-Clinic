@@ -1,92 +1,1596 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Help - Sunrise Dental Clinic</title>
-<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    min-height:100vh;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    color:#1e293b;
+
+    background:
+        linear-gradient(
+            135deg,
+            #edfafa,
+            #f8fbfd 45%,
+            #eef4ff
+        );
+
+    overflow-x:hidden;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+
+/* =========================================================
+   ANIMATED BACKGROUND
+========================================================= */
+
+.background-effect{
+    position:fixed;
+    inset:0;
+
+    overflow:hidden;
+
+    pointer-events:none;
+
+    z-index:-10;
+}
+
+.bg-circle{
+    position:absolute;
+
+    border-radius:50%;
+
+    filter:blur(15px);
+
+    animation:
+        floatingBackground
+        12s ease-in-out
+        infinite alternate;
+}
+
+.bg-one{
+    width:520px;
+    height:520px;
+
+    top:-220px;
+    right:-160px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(6,182,212,.22),
+            transparent 70%
+        );
+}
+
+.bg-two{
+    width:430px;
+    height:430px;
+
+    left:-180px;
+    top:42%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(59,130,246,.14),
+            transparent 70%
+        );
+
+    animation-delay:-4s;
+}
+
+.bg-three{
+    width:360px;
+    height:360px;
+
+    right:15%;
+    bottom:-170px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(16,185,129,.14),
+            transparent
+        );
+
+    animation-delay:-7s;
+}
+
+@keyframes floatingBackground{
+
+    from{
+        transform:
+            translate(0,0)
+            scale(1);
+    }
+
+    to{
+        transform:
+            translate(40px,35px)
+            scale(1.08);
+    }
+}
+
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+    width:94%;
+    max-width:1400px;
+
+    min-height:80px;
+
+    margin:18px auto 0;
+
+    padding:12px 20px;
+
+    border-radius:22px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:20px;
+
+    background:
+        rgba(255,255,255,.92);
+
+    backdrop-filter:blur(18px);
+
+    border:
+        1px solid
+        rgba(255,255,255,.95);
+
+    box-shadow:
+        0 12px 35px
+        rgba(15,23,42,.08);
+
+    position:sticky;
+
+    top:12px;
+
+    z-index:1000;
+
+    animation:
+        navReveal
+        .7s ease both;
+}
+
+@keyframes navReveal{
+
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand{
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    color:#155e75;
+
+    font-weight:800;
+
+    font-size:18px;
+}
+
+.tooth{
+    width:50px;
+    height:50px;
+
+    border-radius:16px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:27px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0891b2,
+            #0f766e
+        );
+
+    box-shadow:
+        0 8px 20px
+        rgba(8,145,178,.25);
+
+    animation:
+        toothFloat
+        3s ease-in-out
+        infinite;
+}
+
+@keyframes toothFloat{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-5px);
+    }
+}
+
+
+/* =========================================================
+   USER INFO
+========================================================= */
+
+.user-info{
+    display:flex;
+    align-items:center;
+
+    gap:14px;
+}
+
+#welcomeName{
+    font-size:13px;
+
+    font-weight:700;
+
+    color:#475569;
+}
+
+#logoutBtn{
+    padding:
+        10px 16px;
+
+    border:none;
+
+    border-radius:11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ef4444,
+            #dc2626
+        );
+
+    color:white;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    box-shadow:
+        0 6px 15px
+        rgba(220,38,38,.20);
+}
+
+#logoutBtn:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 10px 24px
+        rgba(220,38,38,.30);
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.container{
+    width:92%;
+    max-width:1200px;
+
+    margin:
+        35px auto 60px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header{
+    padding:
+        34px 38px;
+
+    margin-bottom:22px;
+
+    border-radius:27px;
+
+    position:relative;
+
+    overflow:hidden;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            140deg,
+            #084c5c,
+            #087b83 55%,
+            #0d9488
+        );
+
+    box-shadow:
+        0 20px 45px
+        rgba(8,76,92,.17);
+}
+
+.page-header::before{
+    content:"";
+
+    position:absolute;
+
+    width:290px;
+    height:290px;
+
+    right:-110px;
+    top:-150px;
+
+    border-radius:50%;
+
+    border:
+        45px solid
+        rgba(255,255,255,.05);
+}
+
+.page-header::after{
+    content:"";
+
+    position:absolute;
+
+    width:180px;
+    height:180px;
+
+    left:45%;
+    bottom:-130px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,255,255,.04);
+}
+
+.page-header-content{
+    position:relative;
+
+    z-index:3;
+}
+
+.back-link{
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:7px;
+
+    color:
+        rgba(255,255,255,.78);
+
+    font-size:10px;
+
+    font-weight:700;
+
+    margin-bottom:18px;
+
+    transition:.25s;
+}
+
+.back-link:hover{
+    color:white;
+
+    transform:translateX(-4px);
+}
+
+.page-label{
+    display:inline-block;
+
+    padding:
+        7px 11px;
+
+    border-radius:30px;
+
+    margin-bottom:14px;
+
+    background:
+        rgba(255,255,255,.10);
+
+    border:
+        1px solid
+        rgba(255,255,255,.13);
+
+    font-size:8px;
+
+    letter-spacing:1.4px;
+}
+
+.page-header h1{
+    font-size:
+        clamp(30px,4vw,43px);
+
+    margin-bottom:10px;
+}
+
+.page-header p{
+    max-width:650px;
+
+    color:
+        rgba(255,255,255,.70);
+
+    font-size:11px;
+
+    line-height:1.7;
+}
+
+
+/* =========================================================
+   HELP LAYOUT
+========================================================= */
+
+.help-layout{
+    display:grid;
+
+    grid-template-columns:
+        290px 1fr;
+
+    gap:22px;
+
+    align-items:start;
+}
+
+
+/* =========================================================
+   LEFT NAVIGATION PANEL
+========================================================= */
+
+.help-nav{
+    padding:24px;
+
+    border-radius:25px;
+
+    background:
+        rgba(255,255,255,.94);
+
+    border:
+        1px solid
+        rgba(255,255,255,.98);
+
+    box-shadow:
+        0 15px 40px
+        rgba(15,23,42,.07);
+
+    position:sticky;
+
+    top:115px;
+}
+
+.help-nav h3{
+    color:#164e63;
+
+    font-size:14px;
+
+    margin-bottom:5px;
+}
+
+.help-nav > p{
+    color:#94a3b8;
+
+    font-size:9px;
+
+    line-height:1.6;
+
+    margin-bottom:17px;
+}
+
+.help-links{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:7px;
+}
+
+.help-link{
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:
+        10px 11px;
+
+    border-radius:12px;
+
+    background:#f8fbfc;
+
+    color:#5b7077;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    transition:.25s;
+}
+
+.help-link:hover{
+    background:#e7f8f7;
+
+    color:#087784;
+
+    transform:translateX(4px);
+}
+
+.help-link-num{
+    width:29px;
+    height:29px;
+
+    flex-shrink:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:9px;
+
+    background:white;
+
+    color:#087784;
+
+    font-size:9px;
+
+    font-weight:800;
+
+    box-shadow:
+        0 3px 10px
+        rgba(15,23,42,.04);
+}
+
+
+/* =========================================================
+   CONTENT CARD
+========================================================= */
+
+.card{
+    padding:30px;
+
+    border-radius:27px;
+
+    background:
+        rgba(255,255,255,.94);
+
+    border:
+        1px solid
+        rgba(255,255,255,.98);
+
+    box-shadow:
+        0 15px 45px
+        rgba(15,23,42,.07);
+
+    animation:
+        cardReveal
+        .7s ease both;
+}
+
+@keyframes cardReveal{
+
+    from{
+        opacity:0;
+        transform:translateY(22px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.instructions-title{
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+
+    margin-bottom:23px;
+
+    padding-bottom:20px;
+
+    border-bottom:
+        1px solid #edf2f4;
+}
+
+.instructions-icon{
+    width:44px;
+    height:44px;
+
+    border-radius:13px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#e7f8f7;
+
+    font-size:20px;
+}
+
+.instructions-title h2{
+    font-size:18px;
+
+    color:#164e63;
+}
+
+.instructions-title p{
+    margin-top:3px;
+
+    font-size:9px;
+
+    color:#94a3b8;
+}
+
+
+/* =========================================================
+   HELP STEPS
+========================================================= */
+
+.help-list{
+    display:flex;
+
+    flex-direction:column;
+
+    gap:14px;
+}
+
+.help-step{
+    display:grid;
+
+    grid-template-columns:
+        54px 1fr;
+
+    gap:15px;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    border:
+        1px solid #e5edef;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ffffff,
+            #f9fcfd
+        );
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border .25s ease;
+
+    scroll-margin-top:120px;
+}
+
+.help-step:hover{
+    transform:translateY(-3px);
+
+    border-color:#bce9e8;
+
+    box-shadow:
+        0 10px 30px
+        rgba(8,145,178,.07);
+}
+
+
+/* =========================================================
+   STEP NUMBER
+========================================================= */
+
+.num{
+    width:48px;
+    height:48px;
+
+    border-radius:15px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e2f8f7,
+            #dff4fa
+        );
+
+    color:#087784;
+
+    font-size:13px;
+
+    font-weight:900;
+}
+
+.help-step:nth-child(2) .num{
+    background:#e8efff;
+
+    color:#4f68ac;
+}
+
+.help-step:nth-child(3) .num{
+    background:#eaf8ea;
+
+    color:#39855a;
+}
+
+.help-step:nth-child(4) .num{
+    background:#fff1dd;
+
+    color:#a76f2b;
+}
+
+.help-step:nth-child(5) .num{
+    background:#eee9ff;
+
+    color:#7256a8;
+}
+
+.help-step:nth-child(6) .num{
+    background:#e5f7f5;
+
+    color:#217c73;
+}
+
+
+/* =========================================================
+   STEP CONTENT
+========================================================= */
+
+.content h3{
+    color:#315d66;
+
+    font-size:13px;
+
+    margin-bottom:6px;
+}
+
+.content p{
+    color:#71868c;
+
+    font-size:10px;
+
+    line-height:1.75;
+}
+
+
+/* =========================================================
+   IMPORTANT HELP
+========================================================= */
+
+.help-step.important{
+    margin-top:7px;
+
+    border-color:#f3d3b6;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffdfa,
+            #fff7ee
+        );
+}
+
+.help-step.important .num{
+    background:#fff0dc;
+
+    color:#c46b21;
+}
+
+.help-step.important h3{
+    color:#9b5b26;
+}
+
+
+/* =========================================================
+   SECURITY REMINDER
+========================================================= */
+
+.security-box{
+    margin-top:20px;
+
+    padding:20px;
+
+    border-radius:18px;
+
+    display:flex;
+
+    align-items:flex-start;
+
+    gap:13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e8f8f7,
+            #effafa
+        );
+
+    border:
+        1px solid #d6efed;
+}
+
+.security-icon{
+    width:42px;
+    height:42px;
+
+    flex-shrink:0;
+
+    border-radius:13px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:white;
+
+    font-size:19px;
+}
+
+.security-box h3{
+    font-size:12px;
+
+    color:#155e63;
+
+    margin-bottom:5px;
+}
+
+.security-box p{
+    font-size:9px;
+
+    line-height:1.7;
+
+    color:#688286;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer{
+    margin-top:28px;
+
+    padding:20px 5px;
+
+    border-top:
+        1px solid #dfe8ea;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    color:#94a3a8;
+
+    font-size:8px;
+}
+
+.footer strong{
+    color:#164e63;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:900px){
+
+    .help-layout{
+        grid-template-columns:1fr;
+    }
+
+    .help-nav{
+        position:relative;
+
+        top:0;
+    }
+
+    .help-links{
+        display:grid;
+
+        grid-template-columns:
+            repeat(3,1fr);
+    }
+
+}
+
+
+@media(max-width:650px){
+
+    .topbar{
+        width:95%;
+
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+    .user-info{
+        width:100%;
+
+        justify-content:space-between;
+    }
+
+    .container{
+        width:95%;
+    }
+
+    .page-header{
+        padding:
+            30px 24px;
+    }
+
+    .card{
+        padding:21px;
+    }
+
+    .help-links{
+        grid-template-columns:1fr;
+    }
+
+    .help-step{
+        grid-template-columns:
+            45px 1fr;
+
+        padding:16px;
+    }
+
+    .num{
+        width:42px;
+        height:42px;
+    }
+
+    .footer{
+        flex-direction:column;
+
+        align-items:flex-start;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *{
+        animation:none !important;
+        transition:none !important;
+    }
+
+}
+
+</style>
+
 </head>
+
+
 <body>
-<div class="topbar">
-    <div class="brand"><span class="tooth">🦷</span> Sunrise Dental Clinic</div>
-    <div class="user-info">
-        <span id="welcomeName">Loading...</span>
-        <button id="logoutBtn">Logout</button>
-    </div>
+
+
+<!-- =========================================================
+     BACKGROUND
+========================================================= -->
+
+<div class="background-effect">
+
+    <div class="bg-circle bg-one"></div>
+
+    <div class="bg-circle bg-two"></div>
+
+    <div class="bg-circle bg-three"></div>
+
 </div>
+
+
+
+<!-- =========================================================
+     TOPBAR
+========================================================= -->
+
+<div class="topbar">
+
+    <div class="brand">
+
+        <span class="tooth">
+            🦷
+        </span>
+
+        Sunrise Dental Clinic
+
+    </div>
+
+
+    <div class="user-info">
+
+        <span id="welcomeName">
+            Loading...
+        </span>
+
+        <button id="logoutBtn">
+            Logout
+        </button>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================================
+     MAIN CONTAINER
+========================================================= -->
 
 <div class="container">
-    <div class="card">
-        <a href="dashboard.html">&larr; Back to Menu</a>
-        <h1>Help &amp; Instructions</h1>
-        <p class="subtitle">A quick guide for new front-desk staff</p>
 
-        <div class="help-step">
-            <div class="num">1</div>
-            <div class="content">
-                <h3>Logging in</h3>
-                <p>Use the username and password given to you by the clinic administrator. If you enter the wrong details, the system will show an error and let you try again.</p>
-            </div>
+
+<!-- =========================================================
+     PAGE HEADER
+========================================================= -->
+
+<section class="page-header">
+
+    <div class="page-header-content">
+
+
+        <a href="dashboard.html"
+           class="back-link">
+
+            ← Back to Dashboard
+
+        </a>
+
+
+        <div class="page-label">
+            STAFF HELP CENTER
         </div>
 
-        <div class="help-step">
-            <div class="num">2</div>
-            <div class="content">
-                <h3>Registering a new appointment</h3>
-                <p>From the main menu choose "Register Appointment". Fill in the patient's name, address, contact number, choose the dentist and treatment, and pick a date and time. The system automatically creates a unique appointment number and blocks double-bookings for the same dentist and time slot.</p>
-            </div>
-        </div>
 
-        <div class="help-step">
-            <div class="num">3</div>
-            <div class="content">
-                <h3>Finding an appointment</h3>
-                <p>Choose "Search Appointment" and type the exact appointment number, or a patient's name (partial names work too), then press Search.</p>
-            </div>
-        </div>
+        <h1>
+            Help &amp; Instructions
+        </h1>
 
-        <div class="help-step">
-            <div class="num">4</div>
-            <div class="content">
-                <h3>Managing appointments</h3>
-                <p>Open "All Appointments" to see every booking. From there you can edit patient details, mark a visit as completed once treatment is done, or cancel an appointment if the patient does not show up.</p>
-            </div>
-        </div>
 
-        <div class="help-step">
-            <div class="num">5</div>
-            <div class="content">
-                <h3>Billing a patient</h3>
-                <p>Open "Billing", enter the appointment number, and click "Generate Bill". The system automatically calculates the treatment cost plus the standard consultation fee. Click "Print Receipt" to print a copy for the patient.</p>
-            </div>
-        </div>
+        <p>
 
-        <div class="help-step">
-            <div class="num">6</div>
-            <div class="content">
-                <h3>Logging out</h3>
-                <p>Always click "Logout" (or "Exit System" from the main menu) when you are finished, especially on shared computers, so patient data stays secure.</p>
-            </div>
-        </div>
+            A simple guide for Sunrise Dental Clinic staff.
+            Follow the instructions below to manage appointments,
+            patients and billing safely and efficiently.
 
-        <div class="help-step">
-            <div class="num">!</div>
-            <div class="content">
-                <h3>Need more help?</h3>
-                <p>Contact the clinic administrator if you are locked out, see an unexpected error, or need a password reset.</p>
-            </div>
-        </div>
+        </p>
+
+
     </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     HELP LAYOUT
+========================================================= -->
+
+<div class="help-layout">
+
+
+<!-- =========================================================
+     LEFT NAV
+========================================================= -->
+
+<aside class="help-nav">
+
+    <h3>
+        Quick Guide
+    </h3>
+
+    <p>
+        Select a topic to jump directly to the instructions.
+    </p>
+
+
+    <div class="help-links">
+
+
+        <a href="#step1"
+           class="help-link">
+
+            <span class="help-link-num">
+                01
+            </span>
+
+            Logging in
+
+        </a>
+
+
+        <a href="#step2"
+           class="help-link">
+
+            <span class="help-link-num">
+                02
+            </span>
+
+            Register Appointment
+
+        </a>
+
+
+        <a href="#step3"
+           class="help-link">
+
+            <span class="help-link-num">
+                03
+            </span>
+
+            Search Appointment
+
+        </a>
+
+
+        <a href="#step4"
+           class="help-link">
+
+            <span class="help-link-num">
+                04
+            </span>
+
+            Manage Bookings
+
+        </a>
+
+
+        <a href="#step5"
+           class="help-link">
+
+            <span class="help-link-num">
+                05
+            </span>
+
+            Billing
+
+        </a>
+
+
+        <a href="#step6"
+           class="help-link">
+
+            <span class="help-link-num">
+                06
+            </span>
+
+            Logging Out
+
+        </a>
+
+
+    </div>
+
+</aside>
+
+
+
+<!-- =========================================================
+     HELP CONTENT
+========================================================= -->
+
+<section class="card">
+
+
+    <div class="instructions-title">
+
+        <div class="instructions-icon">
+            📖
+        </div>
+
+
+        <div>
+
+            <h2>
+                Staff Instructions
+            </h2>
+
+            <p>
+                Step-by-step guide to using the clinic system.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="help-list">
+
+
+        <!-- STEP 1 -->
+
+        <div class="help-step"
+             id="step1">
+
+            <div class="num">
+                01
+            </div>
+
+
+            <div class="content">
+
+                <h3>
+                    Logging in
+                </h3>
+
+                <p>
+
+                    Use the username and password given to you
+                    by the clinic administrator. If you enter
+                    incorrect details, the system will display
+                    an error message and allow you to try again.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP 2 -->
+
+        <div class="help-step"
+             id="step2">
+
+            <div class="num">
+                02
+            </div>
+
+
+            <div class="content">
+
+                <h3>
+                    Registering a new appointment
+                </h3>
+
+                <p>
+
+                    From the dashboard, choose
+                    <strong>"Register Appointment"</strong>.
+                    Enter the patient's name, address and
+                    contact number. Select the dentist,
+                    treatment type, appointment date and time.
+                    The system will automatically create a
+                    unique appointment number and prevent
+                    double-bookings for the same dentist and
+                    time slot.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP 3 -->
+
+        <div class="help-step"
+             id="step3">
+
+            <div class="num">
+                03
+            </div>
+
+
+            <div class="content">
+
+                <h3>
+                    Finding an appointment
+                </h3>
+
+                <p>
+
+                    Choose
+                    <strong>"Search Appointment"</strong>
+                    from the dashboard. Enter the exact
+                    appointment number or type the patient's
+                    name. Partial patient names can also be
+                    used. Then click the Search button to
+                    display matching records.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP 4 -->
+
+        <div class="help-step"
+             id="step4">
+
+            <div class="num">
+                04
+            </div>
+
+
+            <div class="content">
+
+                <h3>
+                    Managing appointments
+                </h3>
+
+                <p>
+
+                    Open
+                    <strong>"All Appointments"</strong>
+                    to review every clinic booking. From this
+                    section, staff can update patient details,
+                    edit appointments, mark visits as completed
+                    after treatment, or cancel bookings when
+                    necessary.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP 5 -->
+
+        <div class="help-step"
+             id="step5">
+
+            <div class="num">
+                05
+            </div>
+
+
+            <div class="content">
+
+                <h3>
+                    Billing a patient
+                </h3>
+
+                <p>
+
+                    Open
+                    <strong>"Billing"</strong>,
+                    enter the appointment number and click
+                    <strong>"Generate Bill"</strong>.
+                    The system automatically calculates the
+                    treatment charge together with the standard
+                    consultation fee. Use
+                    <strong>"Print Receipt"</strong>
+                    to provide the patient with a printed copy.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- STEP 6 -->
+
+        <div class="help-step"
+             id="step6">
+
+            <div class="num">
+                06
+            </div>
+
+
+            <div class="content">
+
+                <h3>
+                    Logging out
+                </h3>
+
+                <p>
+
+                    Always click
+                    <strong>"Logout"</strong>
+                    when you have finished using the system.
+                    You can also select
+                    <strong>"Exit System"</strong>
+                    from the dashboard. This is especially
+                    important when using shared computers to
+                    protect patient information.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- MORE HELP -->
+
+        <div class="help-step important">
+
+            <div class="num">
+                !
+            </div>
+
+
+            <div class="content">
+
+                <h3>
+                    Need more help?
+                </h3>
+
+                <p>
+
+                    Contact the clinic administrator if you
+                    are unable to log in, require a password
+                    reset, encounter an unexpected system
+                    error, or need assistance with a clinic
+                    operation.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- SECURITY REMINDER -->
+
+    <div class="security-box">
+
+        <div class="security-icon">
+            🔐
+        </div>
+
+
+        <div>
+
+            <h3>
+                Patient Data Security
+            </h3>
+
+            <p>
+
+                Never share your login details with another
+                person. Always log out after completing your
+                work, especially when using a shared clinic
+                computer.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+
 </div>
 
+
+
+<footer class="footer">
+
+    <div>
+
+        <strong>
+            🦷 Sunrise Dental Clinic
+        </strong>
+
+        &nbsp; • &nbsp;
+
+        Staff Help Center
+
+    </div>
+
+
+    <div>
+        Clinic Management System
+    </div>
+
+</footer>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     EXISTING JS
+========================================================= -->
+
 <script src="js/common.js"></script>
+
+
 <script>
-    (async function init() {
-        await requireLogin();
-        attachLogoutButton();
-    })();
+
+(async function init() {
+
+    await requireLogin();
+
+    attachLogoutButton();
+
+})();
+
 </script>
+
+
 </body>
 </html>
-
-
-//help html 
